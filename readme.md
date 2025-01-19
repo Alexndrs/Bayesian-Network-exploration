@@ -76,6 +76,7 @@ $$P(G|R,S=s0) = \sum_d P(G|S=s0,D=d)P(D=d)$$
 **f) P(R|D=d1) and g) P(R|D=d0):**
 $$P(R|D) = P(R)$$ 
 Due to marginal independence between R and D
+
 **Result:**
 ```diff
 ! [0.34, 0.66]
@@ -84,12 +85,14 @@ Due to marginal independence between R and D
 #### Conditional Dependencies
 **h) P(R|D=d1,G=g2):**
 $$P(R|D,G=g2) = \frac{\sum_s P(S=s)P(D)P(R|S=s)P(G=g2|S=s,D)}{P(D,G=g2)}$$
+
 **Result:**
 ```diff
 ! [0.21147541, 0.78852459]
 ```
 
 **i) P(R|D=d0,G=g2):**
+
 **Result:**
 ```diff
 ! [0.24666667, 0.75333333]
@@ -97,12 +100,14 @@ $$P(R|D,G=g2) = \frac{\sum_s P(S=s)P(D)P(R|S=s)P(G=g2|S=s,D)}{P(D,G=g2)}$$
 
 **j) P(R|D=d1,L=l1):**
 $$P(R|D,L=l1) = \frac{\sum_{s,g} P(S=s)P(D)P(R|S=s)P(G=g|S=s,D)P(L=l1|G=g)}{P(D,L=l1)}$$
+
 **Result:**
 ```diff
 ! [0.24749737, 0.75250263]
 ```
 
 **k) P(R|D=d0,L=l1):**
+
 **Result:**
 ```diff
 ! [0.2736, 0.7264]
@@ -114,6 +119,7 @@ $$P(R|D,L=l1) = \frac{\sum_{s,g} P(S=s)P(D)P(R|S=s)P(G=g|S=s,D)P(L=l1|G=g)}{P(D,
 **l) P(R|do(G=g2)):**
 Due to breaking the causal relationship between S and G:
 $$P(R|do(G=g2)) = P(R)$$
+
 **Result:**
 ```diff
 ! [0.34, 0.66]
@@ -121,11 +127,14 @@ $$P(R|do(G=g2)) = P(R)$$
 
 Compare with observational probability:
 **m) P(R|G=g2):** 
+
+**Result:**
 ```diff
 ! [0.24514529, 0.75485471]
 ```
 
 **n) P(R):**
+
 **Result:**
 ```diff
 ! [0.34, 0.66]
@@ -135,6 +144,7 @@ Compare with observational probability:
 **o) P(G|do(L=l1)):**
 As L is a descendant of G:
 $$P(G|do(L=l1)) = P(G)$$
+
 **Result:**
 ```diff
 ! [0.204, 0.2316, 0.5644]
@@ -142,6 +152,7 @@ $$P(G|do(L=l1)) = P(G)$$
 
 **p) P(G=g1|L=l1):**
 $$P(G=g1|L=l1) = \frac{P(L=l1|G=g1)P(G=g1)}{\sum_g P(L=l1|G=g)P(G=g)}$$
+
 **Result:**
 ```diff
 ! 0.13789900505510605
