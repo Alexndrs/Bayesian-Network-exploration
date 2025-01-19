@@ -11,21 +11,26 @@ The network consists of:
 - 4 directed edges with conditional probabilities: S→R, S→G, D→G, G→L
 
 ## Probability Tables
-The network is defined by the following probability tables:
+To be more efficient, we define the probability tables in numpy array, with the following API
 
 ```python
-P_S = [0.2, 0.8]              # P(S)
-P_D = [0.9, 0.1]              # P(D)
-P_R_S = [[0.9, 0.2],         # P(R|S)
-         [0.1, 0.8]]
+P(S=s0) = P_S[0]
+P(D=d1) = P_D[1]
+P(R=r1|S=s0) = P_R_S[1,0]
+P(G|S=s0,D=d1) = P_G_SD[0,1] = P_G_SD[0,1,:]
+P(L|G=g0) = P_L_G[:,0]
 ```
 
 ## Key Probability Calculations
 
 ### 1. Marginal Probability P(G)
-The marginal probability P(G) can be computed using the law of total probability:
 
-$$P(G) = \sum_{s,d} P(G|S=s,D=d)P(S=s)P(D=d)$$
+We have the following formula deriving from law of total probability and the network structure that we will abuse to compute all the probabilities :
+$$P(S,D,R,G,L) = P(S)P(D)P(R|S)P(G|S,D)P(L|G)$$
+
+For example P(G) can be computed like that by marginalising S and D
+
+$$P(G) = \sum_{s,d} P(S=s)P(D=d)P(G|S=s,D=d)$$
 
 ### 2. Conditional Independence
 
@@ -63,7 +68,7 @@ This shows that forcing G to a specific value breaks its causal relationship wit
 
 3. **Programming Skills**:
    - Implementation of probabilistic calculations in Python
-   - Efficient use of NumPy for probability computations
+   - Use of NumPy for probability computations
 
 4. **Causal Inference**:
    - Understanding of do-calculus
