@@ -37,24 +37,38 @@ $$P(G) = \sum_{s,d,r,l} P(S=s)P(D=d)P(R=r|S=s)P(G|S=s,D=d)P(L=l|G)$$
 **Method 3 (Reduced joint distribution):**
 $$P(G) = \sum_{s,d,r} P(S=s)P(D=d)P(R=r|S=s)P(G|S=s,D=d)$$
 
-**Result:** <span style="color: #9B59B6">P(G) = [0.204, 0.2316, 0.5644]</span>
+**Result:**
+```diff
+! [0.204, 0.2316, 0.5644]
+```
 
 ### 2. Conditional Distributions
 
 #### G Given R
 **b) P(G|R=r1):**
 $$P(G|R=r1) = \frac{P(G,R=r1)}{P(R=r1)} = \frac{\sum_{s,d} P(S=s)P(D=d)P(R=r1|S=s)P(G|S=s,D=d)}{P(R=r1)}$$
-**Result:** <span style="color: #9B59B6">[0.13272727, 0.22175758, 0.64551515]</span>
+
+**Result:**
+```diff
+! [0.13272727, 0.22175758, 0.64551515]
+```
 
 **c) P(G|R=r0):**
 $$P(G|R=r0) = \frac{P(G,R=r0)}{1-P(R=r1)}$$
-**Result:** <span style="color: #9B59B6">[0.34235294, 0.25070588, 0.40694118]</span>
 
-#### G Given R and S
+**Result:**
+```diff
+! [0.34235294, 0.25070588, 0.40694118]
+```
+
 **d) P(G|R=r1,S=s0) and e) P(G|R=r0,S=s0):**
 $$P(G|R,S=s0) = \sum_d P(G|S=s0,D=d)P(D=d)$$
 **Important Note:** Both give the same result as G is conditionally independent of R given S
-**Result:** <span style="color: #9B59B6">[0.54, 0.278, 0.182]</span>
+
+**Result:**
+```diff
+! [0.54, 0.278, 0.182]
+```
 
 ### 3. Independence Properties
 
@@ -62,22 +76,37 @@ $$P(G|R,S=s0) = \sum_d P(G|S=s0,D=d)P(D=d)$$
 **f) P(R|D=d1) and g) P(R|D=d0):**
 $$P(R|D) = P(R)$$ 
 Due to marginal independence between R and D
-**Result:** <span style="color: #9B59B6">[0.34, 0.66]</span>
+**Result:**
+```diff
+! [0.34, 0.66]
+```
 
 #### Conditional Dependencies
 **h) P(R|D=d1,G=g2):**
 $$P(R|D,G=g2) = \frac{\sum_s P(S=s)P(D)P(R|S=s)P(G=g2|S=s,D)}{P(D,G=g2)}$$
-**Result:** <span style="color: #9B59B6">[0.21147541, 0.78852459]</span>
+**Result:**
+```diff
+! [0.21147541, 0.78852459]
+```
 
 **i) P(R|D=d0,G=g2):**
-**Result:** <span style="color: #9B59B6">[0.24666667, 0.75333333]</span>
+**Result:**
+```diff
+! [0.24666667, 0.75333333]
+```
 
 **j) P(R|D=d1,L=l1):**
 $$P(R|D,L=l1) = \frac{\sum_{s,g} P(S=s)P(D)P(R|S=s)P(G=g|S=s,D)P(L=l1|G=g)}{P(D,L=l1)}$$
-**Result:** <span style="color: #9B59B6">[0.24749737, 0.75250263]</span>
+**Result:**
+```diff
+! [0.24749737, 0.75250263]
+```
 
 **k) P(R|D=d0,L=l1):**
-**Result:** <span style="color: #9B59B6">[0.2736, 0.7264]</span>
+**Result:**
+```diff
+! [0.2736, 0.7264]
+```
 
 ### 4. Causal Analysis (do-calculus)
 
@@ -85,23 +114,38 @@ $$P(R|D,L=l1) = \frac{\sum_{s,g} P(S=s)P(D)P(R|S=s)P(G=g|S=s,D)P(L=l1|G=g)}{P(D,
 **l) P(R|do(G=g2)):**
 Due to breaking the causal relationship between S and G:
 $$P(R|do(G=g2)) = P(R)$$
-**Result:** <span style="color: #9B59B6">[0.34, 0.66]</span>
+**Result:**
+```diff
+! [0.34, 0.66]
+```
 
 Compare with observational probability:
-**m) P(R|G=g2):** <span style="color: #9B59B6">[0.24514529, 0.75485471]</span>
+**m) P(R|G=g2):** 
+```diff
+! [0.24514529, 0.75485471]
+```
 
 **n) P(R):**
-**Result:** <span style="color: #9B59B6">[0.34, 0.66]</span>
+**Result:**
+```diff
+! [0.34, 0.66]
+```
 
 #### Intervention on L
 **o) P(G|do(L=l1)):**
 As L is a descendant of G:
 $$P(G|do(L=l1)) = P(G)$$
-**Result:** <span style="color: #9B59B6">[0.204, 0.2316, 0.5644]</span>
+**Result:**
+```diff
+! [0.204, 0.2316, 0.5644]
+```
 
 **p) P(G=g1|L=l1):**
 $$P(G=g1|L=l1) = \frac{P(L=l1|G=g1)P(G=g1)}{\sum_g P(L=l1|G=g)P(G=g)}$$
-**Result:** <span style="color: #9B59B6">0.13789900505510605</span>
+**Result:**
+```diff
+! 0.13789900505510605
+```
 
 ## Key Insights
 
