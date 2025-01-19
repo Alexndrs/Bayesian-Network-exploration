@@ -13,7 +13,7 @@ The network consists of:
 ## Probability Tables
 To be more efficient, we define the probability tables in numpy array, with the following API
 
-```python
+```
 P(S=s0) = P_S[0]
 P(D=d1) = P_D[1]
 P(R=r1|S=s0) = P_R_S[1,0]
@@ -23,27 +23,85 @@ P(L|G=g0) = P_L_G[:,0]
 
 ## Key Probability Calculations
 
-### 1. Marginal Probability P(G)
+### 1. Basic Probability Distributions
 
-We have the following formula deriving from law of total probability and the network structure that we will abuse to compute all the probabilities :
-$$P(S,D,R,G,L) = P(S)P(D)P(R|S)P(G|S,D)P(L|G)$$
+#### a) Marginal Distribution of G
+Calculated using three different methods:
 
-For example P(G) can be computed like that by marginalising S and D
+**Method 1 (Direct marginalization):**
+$$P(G) = P(G|S,D)P(S,D) = \sum_{s,d} P(G|S=s,D=d)P(S=s)P(D=d)$$
 
-$$P(G) = \sum_{s,d} P(S=s)P(D=d)P(G|S=s,D=d)$$
+**Method 2 (Full joint distribution):**
+$$P(G) = \sum_{s,d,r,l} P(S=s)P(D=d)P(R=r|S=s)P(G|S=s,D=d)P(L=l|G)$$
 
-### 2. Conditional Independence
+**Method 3 (Reduced joint distribution):**
+$$P(G) = \sum_{s,d,r} P(S=s)P(D=d)P(R=r|S=s)P(G|S=s,D=d)$$
 
-One interesting finding is that R and D are conditionally independent given S:
+**Result:** <span style="color: #9B59B6">P(G) = [0.204, 0.2316, 0.5644]</span>
 
-$$P(R|D,S) = P(R|S)$$
+### 2. Conditional Distributions
 
-### 3. Do-calculus Analysis
-When analyzing interventions like $P(R|do(G=g_2))$, we found that:
+#### G Given R
+**b) P(G|R=r1):**
+$$P(G|R=r1) = \frac{P(G,R=r1)}{P(R=r1)} = \frac{\sum_{s,d} P(S=s)P(D=d)P(R=r1|S=s)P(G|S=s,D=d)}{P(R=r1)}$$
+**Result:** <span style="color: #9B59B6">[0.13272727, 0.22175758, 0.64551515]</span>
 
-$$P(R|do(G=g_2)) = P(R)$$
+**c) P(G|R=r0):**
+$$P(G|R=r0) = \frac{P(G,R=r0)}{1-P(R=r1)}$$
+**Result:** <span style="color: #9B59B6">[0.34235294, 0.25070588, 0.40694118]</span>
 
-This shows that forcing G to a specific value breaks its causal relationship with S.
+#### G Given R and S
+**d) P(G|R=r1,S=s0) and e) P(G|R=r0,S=s0):**
+$$P(G|R,S=s0) = \sum_d P(G|S=s0,D=d)P(D=d)$$
+**Important Note:** Both give the same result as G is conditionally independent of R given S
+**Result:** <span style="color: #9B59B6">[0.54, 0.278, 0.182]</span>
+
+### 3. Independence Properties
+
+#### R and D Independence
+**f) P(R|D=d1) and g) P(R|D=d0):**
+$$P(R|D) = P(R)$$ 
+Due to marginal independence between R and D
+**Result:** <span style="color: #9B59B6">[0.34, 0.66]</span>
+
+#### Conditional Dependencies
+**h) P(R|D=d1,G=g2):**
+$$P(R|D,G=g2) = \frac{\sum_s P(S=s)P(D)P(R|S=s)P(G=g2|S=s,D)}{P(D,G=g2)}$$
+**Result:** <span style="color: #9B59B6">[0.21147541, 0.78852459]</span>
+
+**i) P(R|D=d0,G=g2):**
+**Result:** <span style="color: #9B59B6">[0.24666667, 0.75333333]</span>
+
+**j) P(R|D=d1,L=l1):**
+$$P(R|D,L=l1) = \frac{\sum_{s,g} P(S=s)P(D)P(R|S=s)P(G=g|S=s,D)P(L=l1|G=g)}{P(D,L=l1)}$$
+**Result:** <span style="color: #9B59B6">[0.24749737, 0.75250263]</span>
+
+**k) P(R|D=d0,L=l1):**
+**Result:** <span style="color: #9B59B6">[0.2736, 0.7264]</span>
+
+### 4. Causal Analysis (do-calculus)
+
+#### Intervention on G
+**l) P(R|do(G=g2)):**
+Due to breaking the causal relationship between S and G:
+$$P(R|do(G=g2)) = P(R)$$
+**Result:** <span style="color: #9B59B6">[0.34, 0.66]</span>
+
+Compare with observational probability:
+**m) P(R|G=g2):** <span style="color: #9B59B6">[0.24514529, 0.75485471]</span>
+
+**n) P(R):**
+**Result:** <span style="color: #9B59B6">[0.34, 0.66]</span>
+
+#### Intervention on L
+**o) P(G|do(L=l1)):**
+As L is a descendant of G:
+$$P(G|do(L=l1)) = P(G)$$
+**Result:** <span style="color: #9B59B6">[0.204, 0.2316, 0.5644]</span>
+
+**p) P(G=g1|L=l1):**
+$$P(G=g1|L=l1) = \frac{P(L=l1|G=g1)P(G=g1)}{\sum_g P(L=l1|G=g)P(G=g)}$$
+**Result:** <span style="color: #9B59B6">0.13789900505510605</span>
 
 ## Key Insights
 
