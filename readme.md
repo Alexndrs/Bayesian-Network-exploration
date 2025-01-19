@@ -20,6 +20,7 @@ P(R=r1|S=s0) = P_R_S[1,0]
 P(G|S=s0,D=d1) = P_G_SD[0,1] = P_G_SD[0,1,:]
 P(L|G=g0) = P_L_G[:,0]
 ```
+All the results in this README are computed in the file [TP1_bayesian_network.py](./TP1_bayesian_network.py)
 
 ## Key Probability Calculations
 
