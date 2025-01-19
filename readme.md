@@ -158,16 +158,6 @@ $$P(G=g1|L=l1) = \frac{P(L=l1|G=g1)P(G=g1)}{\sum_g P(L=l1|G=g)P(G=g)}$$
 ! 0.13789900505510605
 ```
 
-## Key Insights
-
-1. **Independence Properties**:
-   - R and D are marginally independent
-   - S and D are independent
-   - L is conditionally independent of all other variables given G
-
-2. **Causal Effects**:
-   - Interventional probabilities often differ from observational ones
-   - The do-operator reveals true causal relationships
 
 ## Skills Acquired
 
